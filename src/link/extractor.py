@@ -51,6 +51,9 @@ class Extractor:
         r"\S*?https://www\.douyin\.com/channel/\d+?\?modal_id=(\d{19})\S*?"
     )
 
+    detail_jingxuan = compile(r"\S*?https://www\.douyin\.com/jingxuan\S*?modal_id=(\d{19})\S*?") 
+
+
     def __init__(
         self,
         params: "Parameter",
@@ -144,7 +147,8 @@ class Extractor:
         search = self.extract_info(self.detail_search, urls, 1)
         discover = self.extract_info(self.detail_discover, urls, 1)
         channel = self.extract_info(self.channel_link, urls, 1)
-        return link + share + account + search + discover + channel
+        jingxuan = self.extract_info(self.detail_jingxuan, urls, 1)  # 新增
+        return link + share + account + search + discover + channel # 修改
 
     @staticmethod
     def extract_sec_user_id(urls: list[str]) -> list[list]:
@@ -179,6 +183,8 @@ class ExtractorTikTok(Extractor):
     )  # 合集链接
 
     live_link = compile(r"\S*?https://www\.tiktok\.com/@[^\s/]+/live\S*?")  # 直播链接
+
+    
 
     def __init__(self, params: "Parameter"):
         super().__init__(
