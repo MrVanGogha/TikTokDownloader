@@ -1,4 +1,4 @@
-from nt import link
+
 from textwrap import dedent
 from typing import TYPE_CHECKING
 
