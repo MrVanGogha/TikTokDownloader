@@ -13,6 +13,7 @@ from .comment import Comment
 from .reply import Reply
 from .mix import Mix, MixTikTok
 from .live import Live, LiveTikTok
+from .link_detail import LinkDetail  # 新增
 
 __all__ = (
     "GeneralSearch",
@@ -33,4 +34,5 @@ __all__ = (
     "MixTikTok",
     "Live",
     "LiveTikTok",
+    "LinkDetail",  # 新增
 )

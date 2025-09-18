@@ -1,3 +1,4 @@
+from nt import link
 from textwrap import dedent
 from typing import TYPE_CHECKING
 
@@ -32,6 +33,7 @@ from ..models import (
     UrlResponse,
     UserSearch,
     VideoSearch,
+    LinkDetail,  
 )
 from ..translation import _
 from .main_terminal import TikTok
@@ -71,6 +73,15 @@ class APIServer(TikTok):
             "",
             proxy,
         )
+    async def get_detail_id(self, text: str, proxy: str = None) -> str:
+        """通过链接获取作品详情的 ID"""
+        detail_id = await self.links.run(
+            text,
+            "detail",
+            proxy,
+        )
+        return detail_id
+
 
     async def handle_redirect_tiktok(self, text: str, proxy: str = None) -> str:
         return await self.links_tiktok.run(
@@ -189,6 +200,40 @@ class APIServer(TikTok):
                 url=None,
                 params=extract.model_dump(),
             )
+
+        @self.server.post(
+            "/douyin/link_detail",
+            summary=_("通过链接获取单个作品数据"),
+            description=_(
+                dedent("""
+                **参数**:
+                
+                - **text**: 包含分享链接的字符串；必需参数
+                - **cookie**: 抖音 Cookie；可选参数
+                - **proxy**: 代理；可选参数
+                - **source**: 是否返回原始响应数据；可选参数，默认值：False
+                
+                **功能说明**:
+                
+                此接口会自动解析分享链接获取完整链接，然后提取作品ID并获取作品详情数据。
+                支持抖音分享链接格式，如：https://v.douyin.com/xxx
+                """)
+            ),
+            tags=[_("抖音")],
+            response_model=DataResponse,
+        )
+        async def handle_link_detail(
+            link_extract: LinkDetail, token: str = Depends(token_dependency)
+        ):
+            if detail_id := await self.get_detail_id(link_extract.text, link_extract.proxy):
+                extract = Detail(cookie=link_extract.cookie,proxy=link_extract.proxy,source=link_extract.source,detail_id=detail_id[0])
+                return await self.handle_detail(extract, False)
+            return DataResponse(
+                message=_("获取作品数据失败！"),
+                data=None,
+                params=link_extract.model_dump(),
+            )
+
 
         @self.server.post(
             "/douyin/detail",
