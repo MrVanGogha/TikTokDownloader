@@ -485,7 +485,10 @@ class Extractor:
                 data,
             )
         )
-        item["duration"] = self.time_conversion(
+        # item["duration"] = self.time_conversion(
+        #     self.safe_extract(data, "video.duration", 0)
+        # )
+        item["duration"] = self.ms_to_seconds(
             self.safe_extract(data, "video.duration", 0)
         )
         item["uri"] = self.safe_extract(data, "video.play_addr.uri")
@@ -656,6 +659,11 @@ class Extractor:
     def time_conversion(time_: int) -> str:
         second = time_ // 1000
         return f"{second // 3600:0>2d}:{second % 3600 // 60:0>2d}:{second % 3600 % 60:0>2d}"
+    
+    @staticmethod
+    def ms_to_seconds(time_: int) -> int:
+        return time_ // 1000
+
 
     @staticmethod
     def time_conversion_tiktok(seconds: int) -> str:
