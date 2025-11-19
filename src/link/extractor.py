@@ -59,10 +59,10 @@ class Extractor:
         params: "Parameter",
         tiktok=False,
     ):
-        self.client = params.client_tiktok if tiktok else params.client
         self.requester = Requester(
             params,
-            self.client,
+            params.client_tiktok if tiktok else params.client,
+            params.headers_tiktok if tiktok else params.headers,
         )
 
     async def run(
@@ -168,14 +168,14 @@ class Extractor:
 
 
 class ExtractorTikTok(Extractor):
-    SEC_UID = compile(r'"secUid":"([a-zA-Z0-9_-]+)"')
+    SEC_UID = compile(r'"verified":(?:false|true),"secUid":"([a-zA-Z0-9_-]+)"')
     ROOD_ID = compile(r'"roomId":"(\d+)"')
     MIX_ID = compile(r'"canonical":"\S+?(\d{19})"')
 
     account_link = compile(r"\S*?(https://www\.tiktok\.com/@[^\s/]+)\S*?")
 
     detail_link = compile(
-        r"\S*?https://www\.tiktok\.com/@[^\s/]+/(?!playlist)(?:(?:video|photo)/(\d{19}))?\S*?"
+        r"\S*?https://www\.tiktok\.com/@[^\s/]+/(?!playlist|collection)(?:(?:video|photo)/(\d{19}))?\S*?"
     )  # 作品链接
 
     mix_link = compile(

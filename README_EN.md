@@ -16,8 +16,9 @@
 <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/JoeanAmier/TikTokDownloader/total?style=flat-square&color=ffdd59">
 </div>
 <br>
-<p>🔥 <b>TikTok Posts/Liked/Mix/Live/Video/Image/Music; DouYin Posts/Liked/Favorites/Collections/Video/Image/LivePhoto/Live/Music/Mix/Comments/Account/Search/Hot Board Data Acquisition Tools:</b> Fully open-source, free data collection and file download tool based on HTTPX module implementation; batch download of DouYin account posts works, liked works, favorites works and collections works; batch download of TikTok account posts works and liked works; download of DouYin linked or TikTok linked works; obtain DouYin live stream addresses; download DouYin live stream video; obtain TikTok live stream addresses; download TikTok live stream video; collect DouYin works comments data; batch download of DouYin Mix works; batch download of TikTok Mix works; collect detailed data of DouYin accounts; collect DouYin user/works/live search results; collect DouYin Hot Board data.</p>
+<p>🔥 <b>TikTok Posts/Liked/Mix/Live/Video/Image/Music; DouYin Posts/Liked/Favorites/Collections/Video/Image/LivePhoto/Live/Music/Mix/Comments/Account/Search/Hot Board Data Acquisition Tools:</b> Fully open-source, free data collection and file download tool based on HTTPX module implementation; batch download of DouYin account posts works, liked works, favorites works and collections works; batch download of TikTok account posts works and liked works; download of DouYin linked or TikTok linked works; obtain DouYin live stream push addresses; download DouYin live stream video; obtain TikTok live stream push addresses; download TikTok live stream video; collect DouYin works comments data; batch download of DouYin Mix works; batch download of TikTok Mix works; collect detailed data of DouYin accounts; collect DouYin user/works/live search results; collect DouYin Hot Board data.</p>
 <p>⭐ Previous project names: <code>TikTokDownloader</code></p>
+<p>📣 This project will undergo code structure refactoring in the future, with the goal of making the code more robust and providing better maintainability and extensibility. If you have any thoughts on project design, implementation methods, or optimization ideas, you are welcome to make suggestions or participate in discussions!</p>
 <p>⭐ Due to the author's limited energy, I was unable to update the English document in a timely manner, and the content may have become outdated, partial translation is machine translation, the translation result may be incorrect, Suggest referring to Chinese documentation. If you want to contribute to translation, we warmly welcome you.</p>
 <hr>
 
@@ -40,8 +41,8 @@
 <li>✅ Persistently save collected data</li>
 <li>✅ Support CSV/XLSX/SQLite format for saving data</li>
 <li>✅ Download dynamic/static cover images</li>
-<li>✅ Obtain DouYin live stream addresses</li>
-<li>✅ Obtain TikTok live stream addresses</li>
+<li>✅ Obtain DouYin live stream push addresses</li>
+<li>✅ Obtain TikTok live stream push addresses</li>
 <li>✅ Use ffmpeg to download live video</li>
 <li>✅ Web UI interaction interface</li>
 <li>✅ Collect comments data from DouYin works</li>
@@ -130,10 +131,10 @@ demo()
 <p>⭐ Mac OS and Windows 10 and above users can go to <a href="https://github.com/JoeanAmier/TikTokDownloader/releases/latest">Releases</a> or <a href="https://github.com/JoeanAmier/TikTokDownloader/actions">Actions</a> to download the compiled program, ready to use!</p>
 <p>⭐ This project includes GitHub Actions for automatic building executable files. Users can use GitHub Actions to build the latest source code into executable files at any time!</p>
 <p>⭐ For the automatic building executable files tutorial, please refer to the <code>Build of Executable File Guide</code> section of this document. If you need a more detailed step-by-step tutorial with illustrations, please <a href="https://mp.weixin.qq.com/s/TorfoZKkf4-x8IBNLImNuw">check out this article</a>!</p>
-<p><strong>Note: The executable file <code>main</code> on Mac OS may need to be started from the terminal command line. Due to device limitations, the executable file on the Mac OS platform has not been tested, and its usability cannot be guaranteed!</strong></p>
+<p><strong>Note: Due to the macOS platform's executable file <code>main</code> not being code-signed, it will be restricted by system security measures on first run. Please execute the command <code>xattr -cr main.app</code> in the terminal to remove the security flag, after which it can run normally.</strong></p>
 <hr>
 <ol>
-<li><b>Run the executable file</b> or <b>configure the environment to run</b>
+<li><b>Run the executable file</b> or <b>configure the environment to run</b>(choose one of the two)
 <ol><b>Run the executable file</b>
 <li>Download the executable file compressed file built by <a href="https://github.com/JoeanAmier/TikTokDownloader/releases/latest">Releases</a> or Actions.</li>
 <li>After extracting, open the program folder and double-click to run <code>main</code>.</li>
@@ -151,7 +152,7 @@ demo()
 </li>
 <li>Read the disclaimer of DouK-Downloader and enter content according to the prompt.</li>
 <li>Write Cookie Information into Configuration File 
-<ol><b>Read Cookie from Clipboard</b>
+<ol><b>Read Cookie from Clipboard(Recommended)</b>
 <li>Refer to the <a href="https://github.com/JoeanAmier/TikTokDownloader/blob/master/docs/Cookie%E8%8E%B7%E5%8F%96%E6%95%99%E7%A8%8B.md">Cookie Extraction Tutorial</a>, copy the required Cookie to the clipboard</li>
 <li>Select the <code>Read Cookie from Clipboard</code> option, the program will automatically read the Cookie from the clipboard and write it into the configuration file</li>
 </ol>
@@ -215,7 +216,7 @@ demo()
 <li>When downloading files, the program first downloads them to a temporary folder and then moves them to the storage folder upon completion. The temporary folder will be emptied when the program ends.</li>
 <li>The <code>Batch Download Favorites Works Mode</code> currently only supports downloading Favorites works for the account corresponding to the currently logged-in Cookie and does not support multiple accounts.</li>
 <li>If you want the program to use a proxy to request data, you must set the <code>proxy</code> parameter in <code>settings.json</code>; otherwise, the program will not use a proxy.</li>
-<li>If your computer does not have a suitable program for editing JSON files, we recommend using the <a href="https://try8.cn/tool/format/json">JSON Online Tool</a> to edit the configuration file content.</li>
+<li>If your computer does not have a suitable program for editing JSON files, we recommend using the <a href="https://www.toolhelper.cn/JSON/JSONFormat">Online Tool</a> to edit the configuration file content, after modification, the software needs to be restarted to take effect.</li>
 <li>When the program prompts the user to input content or links, please be careful to avoid including newline characters, as this may cause unexpected issues.</li>
 <li>This project does not support downloading paid works. Please do not report any issues related to downloading paid works.</li>
 <li>On Windows systems, the program needs to be run as an administrator to read Cookies from Chromium, Chrome, and Edge browsers.</li>
@@ -383,15 +384,16 @@ repository to execute the build process
 
 ## ZMTO
 
-<a href="https://www.zmto.com/"><img src="https://console.zmto.com/templates/2019/dist/images/logo_dark.svg" alt="ZMTO"></a>
+<p><a href="https://www.zmto.com/"><img src="https://console.zmto.com/templates/2019/dist/images/logo_dark.svg" alt="ZMTO"></a></p>
 <p><a href="https://www.zmto.com/">ZMTO</a>: A professional cloud infrastructure provider offering sophisticated solutions with reliable technology and expert support. We also empower qualified open source initiatives with enterprise-grade VPS infrastructure, driving sustainable development and innovation in the open source ecosystem. </p>
 
 ***
 
 ## TikHub
 
-<p><a href="https://tikhub.io/">TikHub</a>: Third-party API provider offering multi-platform APIs.</p>
-<p>Through daily check-ins, users can earn a small amount of free usage credits. You can also use my <strong>referral link</strong>: <a href="https://user.tikhub.io/users/signup?referral_code=ZrdH8McC">https://user.tikhub.io/users/signup?referral_code=ZrdH8McC</a> or <strong>referral code</strong>: <code>ZrdH8McC</code>, register and top up to get a $2 credit!</p>
+<p><a href="https://tikhub.io/?utm_source=github&utm_medium=readme&utm_campaign=tiktok_downloader&ref=github_joeanamier_tiktokdownloader"><img src="docs/TIKHUB_AD.jpg" alt="TIKHUB" width="458" height="319"></a></p>
+<p><a href="https://tikhub.io/?utm_source=github&utm_medium=readme&utm_campaign=tiktok_downloader&ref=github_joeanamier_tiktokdownloader">TikHub API</a> offers over 700 endpoints to retrieve and analyze data from 14+ social media platforms—including videos, users, comments, stores, products, trends, and more—enabling one-stop access and analysis of all your data.</p>
+<p>Use <strong>invitation code</strong>: <code>ZrdH8McC</code> to register and recharge to get <code>$2</code> credit.</p>
 
 # ✉️ Contact the Author
 
@@ -416,6 +418,7 @@ repository to execute the build process
 * https://github.com/Johnserf-Seed/f2
 * https://github.com/Johnserf-Seed/TikTokDownload
 * https://github.com/Evil0ctal/Douyin_TikTok_Download_API
+* https://github.com/justbeluga/tiktok-web-reverse-engineering
 * https://github.com/NearHuiwen/TiktokDouyinCrawler
 * https://github.com/ihmily/DouyinLiveRecorder
 * https://github.com/encode/httpx/

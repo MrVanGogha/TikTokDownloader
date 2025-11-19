@@ -74,7 +74,6 @@ class API:
         self.headers = params.headers.copy()
         self.log = params.logger
         self.ab = params.ab
-        self.xb = params.xb
         self.console = params.console
         self.api = ""
         self.proxy = proxy
@@ -452,9 +451,13 @@ class API:
         server_mode: bool = False,
     ) -> None:
         if server_mode:
-            cls.progress_object = cls.__fake_progress_object
+            cls._progress_factory = cls.__fake_progress_object
         else:
-            cls.progress_object = cls.__general_progress_object
+            cls._progress_factory = cls.__general_progress_object
+
+    def progress_object(self):
+        factory = getattr(self, "_progress_factory", self.__general_progress_object)
+        return factory()
 
     def __general_progress_object(self):
         return Progress(
@@ -535,6 +538,8 @@ class APITikTok(API):
         **kwargs,
     ):
         super().__init__(params, cookie, proxy, *args, **kwargs)
+        self.xb = params.xb
+        self.xg = params.xg
         self.headers = params.headers_tiktok.copy()
         self.cookie = cookie
         self.client: AsyncClient = params.client_tiktok
@@ -575,10 +580,12 @@ class APITikTok(API):
                 params,
                 quote_via=quote,
             )
-            params += f"&X-Bogus={
-                self.xb.get_x_bogus(
-                    params, number, self.headers.get('User-Agent', USERAGENT)
-                )
-            }"
+            xb = self.xb.get_x_bogus(
+                params, number, self.headers.get("User-Agent", USERAGENT)
+            )
+            xg = self.xg.generate(
+                params, user_agent=self.headers.get("User-Agent", USERAGENT)
+            )
+            params += f"&X-Bogus={xb}&X-Gnarly={xg}"
             return params
         return ""
