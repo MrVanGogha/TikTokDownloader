@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  douk:
+    build: .
+    container_name: douk-downloader
+    environment:
+      - DOUK_SKIP_DISCLAIMER=1
+      - DOUK_LANGUAGE=zh_CN
+    ports:
+      - "5556:5555"
+    volumes:
+      - ./Volume:/app/Volume
+    restart: unless-stopped

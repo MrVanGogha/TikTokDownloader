@@ -1,4 +1,5 @@
 from asyncio import CancelledError, run
+from os import getenv
 from threading import Event, Thread
 from time import sleep
 
@@ -82,7 +83,8 @@ class TikTokDownloader:
     async def read_config(self):
         self.config = self.__format_config(await self.database.read_config_data())
         self.option = self.__format_config(await self.database.read_option_data())
-        self.set_language(self.option["Language"])
+        language = getenv("DOUK_LANGUAGE") or self.option["Language"]
+        self.set_language(language)
 
     @staticmethod
     def __format_config(config: list) -> dict:
@@ -183,6 +185,9 @@ class TikTokDownloader:
         self.set_language(language)
 
     async def disclaimer(self):
+        if getenv("DOUK_SKIP_DISCLAIMER") == "1":
+            await self.database.update_config_data("Disclaimer", 1)
+            return True
         if not self.config["Disclaimer"]:
             await self.__init_language()
             self.console.print(_(DISCLAIMER_TEXT), style=MASTER)
