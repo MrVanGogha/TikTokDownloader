@@ -83,7 +83,7 @@ class TikTokDownloader:
     async def read_config(self):
         self.config = self.__format_config(await self.database.read_config_data())
         self.option = self.__format_config(await self.database.read_option_data())
-        language = getenv("DOUK_LANGUAGE") or self.option["Language"]
+        language = "zh_CN"
         self.set_language(language)
 
     @staticmethod
@@ -185,7 +185,7 @@ class TikTokDownloader:
         self.set_language(language)
 
     async def disclaimer(self):
-        if getenv("DOUK_SKIP_DISCLAIMER") == "1":
+        if True:
             await self.database.update_config_data("Disclaimer", 1)
             return True
         if not self.config["Disclaimer"]:
