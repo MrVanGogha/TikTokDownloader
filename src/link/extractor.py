@@ -148,7 +148,7 @@ class Extractor:
         discover = self.extract_info(self.detail_discover, urls, 1)
         channel = self.extract_info(self.channel_link, urls, 1)
         jingxuan = self.extract_info(self.detail_jingxuan, urls, 1)  # 新增
-        return link + share + account + search + discover + channel # 修改
+        return link + share + account + search + discover + channel + jingxuan  # 修改
 
     @staticmethod
     def extract_sec_user_id(urls: list[str]) -> list[list]:
