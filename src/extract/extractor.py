@@ -538,9 +538,9 @@ class Extractor:
             )
             return (
                 (
-                    bit_rate[-1][-3],
-                    bit_rate[-1][-2],
-                    bit_rate[-1][-1][VIDEO_INDEX],
+                    bit_rate[0][-3],
+                    bit_rate[0][-2],
+                    bit_rate[0][-1][VIDEO_INDEX],
                 )
                 if bit_rate
                 else (-1, -1, "")
