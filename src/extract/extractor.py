@@ -514,6 +514,7 @@ class Extractor:
             [],
         )
         try:
+            bit_rate = [i for i in bit_rate if i.format == 'mp4']                
             bit_rate: list[tuple[int, int, int, int, int, list[str]]] = [
                 (
                     i.FPS,
